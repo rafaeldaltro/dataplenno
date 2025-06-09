@@ -1,5 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { generatePasswordResetToken, sendPasswordResetEmail } from "@/lib/password-reset"
+
+// Simulação de banco de dados de usuários
+const users = [
+  { email: "admin@dataplenno.com", name: "Administrador" },
+  { email: "user@dataplenno.com", name: "Usuário" },
+  { email: "test@dataplenno.com", name: "Teste" },
+]
+
+// Armazenamento temporário de tokens (em produção, usar banco de dados)
+const resetTokens = new Map<string, { email: string; expires: Date }>()
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,35 +18,46 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email é obrigatório" }, { status: 400 })
     }
 
-    // Verificar se o email existe no sistema (simulação)
-    const validEmails = ["admin@dataplenno.com", "user@dataplenno.com", "test@dataplenno.com"]
-
-    if (!validEmails.includes(email)) {
+    // Verificar se o usuário existe
+    const user = users.find((u) => u.email === email)
+    if (!user) {
       return NextResponse.json({ error: "Email não encontrado no sistema" }, { status: 404 })
     }
 
-    // Gerar token de recuperação
-    const resetToken = generatePasswordResetToken()
+    // Gerar token seguro
+    const token = crypto.randomUUID()
+    const expires = new Date(Date.now() + 60 * 60 * 1000) // 1 hora
 
-    // Armazenar token temporariamente (em produção, usar banco de dados)
-    const resetData = {
-      email,
-      token: resetToken,
-      expires: Date.now() + 3600000, // 1 hora
-    }
+    // Armazenar token
+    resetTokens.set(token, { email, expires })
 
-    // Simular armazenamento do token (em produção, salvar no banco)
-    if (typeof window === "undefined") {
-      global.passwordResetTokens = global.passwordResetTokens || new Map()
-      global.passwordResetTokens.set(resetToken, resetData)
-    }
-
-    // Enviar email de recuperação
-    await sendPasswordResetEmail(email, resetToken)
+    // Simular envio de email (em produção, usar serviço real)
+    console.log(`
+    ========================================
+    EMAIL DE RECUPERAÇÃO DE SENHA
+    ========================================
+    Para: ${email}
+    Assunto: Recuperação de senha - Dataplenno
+    
+    Olá ${user.name},
+    
+    Você solicitou a recuperação de sua senha.
+    Clique no link abaixo para redefinir sua senha:
+    
+    ${process.env.NEXTAUTH_URL || "http://localhost:3000"}/reset-password?token=${token}
+    
+    Este link expira em 1 hora.
+    
+    Se você não solicitou esta recuperação, ignore este email.
+    
+    Atenciosamente,
+    Equipe Dataplenno
+    ========================================
+    `)
 
     return NextResponse.json({
-      message: "Email de recuperação enviado com sucesso",
       success: true,
+      message: "Email de recuperação enviado com sucesso",
     })
   } catch (error) {
     console.error("Erro ao processar recuperação de senha:", error)

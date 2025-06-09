@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,8 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Eye, EyeOff, Activity, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { ForgotPasswordForm } from "@/components/forgot-password-form"
 
 interface LoginFormProps {
   onLogin: () => void
@@ -24,28 +22,16 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [error, setError] = useState("")
-  const router = useRouter()
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
 
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      })
-
-      if (result?.error) {
-        setError("Credenciais inválidas. Use admin@dataplenno.com / admin123")
-        setIsLoading(false)
-        return
-      }
-
-      if (result?.ok) {
-        // Armazenar dados do usuário no localStorage para compatibilidade com o código existente
+    // Simulate authentication
+    setTimeout(() => {
+      if (email === "admin@dataplenno.com" && password === "admin123") {
         localStorage.setItem("auth-token", "mock-jwt-token")
         localStorage.setItem(
           "user-data",
@@ -56,43 +42,35 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           }),
         )
         onLogin()
+      } else {
+        setError("Credenciais inválidas. Use admin@dataplenno.com / admin123")
       }
-    } catch (error) {
-      setError("Ocorreu um erro durante o login. Tente novamente.")
-    } finally {
       setIsLoading(false)
-    }
+    }, 1500)
   }
 
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true)
     setError("")
 
-    try {
-      const result = await signIn("google", {
-        redirect: false,
-      })
-
-      if (result?.ok) {
-        // Store user data for compatibility
-        localStorage.setItem("auth-token", "google-auth-token")
-        localStorage.setItem(
-          "user-data",
-          JSON.stringify({
-            name: "Usuário Google",
-            email: "user@google.com",
-            role: "user",
-          }),
-        )
-        onLogin()
-      } else if (result?.error) {
-        setError("Erro ao fazer login com Google. Tente novamente.")
-      }
-    } catch (error) {
-      setError("Ocorreu um erro durante o login com Google. Tente novamente.")
-    } finally {
+    // Simulate Google authentication
+    setTimeout(() => {
+      localStorage.setItem("auth-token", "google-auth-token")
+      localStorage.setItem(
+        "user-data",
+        JSON.stringify({
+          name: "Usuário Google",
+          email: "user@google.com",
+          role: "user",
+        }),
+      )
+      onLogin()
       setIsGoogleLoading(false)
-    }
+    }, 2000)
+  }
+
+  if (showForgotPassword) {
+    return <ForgotPasswordForm onBack={() => setShowForgotPassword(false)} />
   }
 
   return (
@@ -183,6 +161,17 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </Button>
               </div>
+            </div>
+
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                variant="link"
+                className="px-0 font-normal text-sm h-auto"
+                onClick={() => setShowForgotPassword(true)}
+              >
+                Esqueci minha senha
+              </Button>
             </div>
 
             {error && (

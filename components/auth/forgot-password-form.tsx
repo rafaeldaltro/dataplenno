@@ -109,6 +109,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -132,7 +133,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
               )}
             </Button>
 
-            <Button onClick={onBack} variant="outline" className="w-full">
+            <Button onClick={onBack} variant="outline" className="w-full" disabled={isLoading}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Voltar ao Login
             </Button>
