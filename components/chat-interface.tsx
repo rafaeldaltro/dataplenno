@@ -76,7 +76,7 @@ export function ChatInterface() {
       id: "1",
       type: "assistant",
       content:
-        "Olá! Sou seu assistente de análise de dados. Faça uma pergunta sobre seus dados e eu fornecerei insights detalhados com gráficos e tabelas.",
+        "Olá! Sou seu assistente de análise de dados do Dataplenno. Faça uma pergunta sobre seus dados e eu fornecerei insights detalhados com gráficos e tabelas.",
       timestamp: new Date(),
     },
   ])

@@ -68,7 +68,7 @@ export function AppSidebar({ activeView, onViewChange }: AppSidebarProps) {
             <Activity className="h-6 w-6 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="font-semibold">Question Data</h2>
+            <h2 className="font-semibold">Dataplenno</h2>
             <p className="text-xs text-muted-foreground">Análise Inteligente</p>
           </div>
         </div>

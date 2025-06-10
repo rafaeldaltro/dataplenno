@@ -28,7 +28,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
 
     // Simular autenticação
     setTimeout(() => {
-      if (email === "admin@questiondata.com" && password === "admin123") {
+      if (email === "admin@dataplenno.com" && password === "admin123") {
         localStorage.setItem("auth-token", "mock-jwt-token")
         localStorage.setItem(
           "user-data",
@@ -40,7 +40,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
         )
         onLogin()
       } else {
-        setError("Credenciais inválidas. Use admin@questiondata.com / admin123")
+        setError("Credenciais inválidas. Use admin@dataplenno.com / admin123")
       }
       setIsLoading(false)
     }, 1500)
@@ -55,7 +55,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               <Activity className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Question Data</CardTitle>
+          <CardTitle className="text-2xl font-bold">Dataplenno</CardTitle>
           <CardDescription>Sistema Inteligente de Análise de Dados</CardDescription>
         </CardHeader>
         <CardContent>
@@ -109,7 +109,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             <p className="text-sm text-muted-foreground text-center">
               <strong>Credenciais de teste:</strong>
               <br />
-              E-mail: admin@questiondata.com
+              E-mail: admin@dataplenno.com
               <br />
               Senha: admin123
             </p>

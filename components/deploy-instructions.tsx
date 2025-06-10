@@ -12,7 +12,7 @@ export function DeployInstructions() {
     <div className="container mx-auto py-10 space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Deploy do Question Data na Vercel</CardTitle>
+          <CardTitle className="text-2xl">Deploy do Dataplenno na Vercel</CardTitle>
           <CardDescription>Siga estas instruções para fazer um novo deploy do seu projeto na Vercel</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -63,7 +63,7 @@ export function DeployInstructions() {
                       Dashboard da Vercel
                     </a>
                   </li>
-                  <li>Selecione seu projeto "Question Data"</li>
+                  <li>Selecione seu projeto "Dataplenno"</li>
                   <li>Clique no botão "Deploy" no canto superior direito</li>
                   <li>Selecione "Deploy" novamente para confirmar</li>
                 </ol>
@@ -81,7 +81,7 @@ export function DeployInstructions() {
                 <Alert variant="success" className="bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-100">
                   <CheckCircle className="h-4 w-4" />
                   <AlertTitle>Deploy concluído</AlertTitle>
-                  <AlertDescription>Seu projeto Question Data está atualizado e disponível online!</AlertDescription>
+                  <AlertDescription>Seu projeto Dataplenno está atualizado e disponível online!</AlertDescription>
                 </Alert>
               </div>
             </Step>

@@ -6,8 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
+// Alterar o título e descrição do site
 export const metadata: Metadata = {
-  title: "Question Data - Sistema Inteligente de Análise de Dados",
+  title: "Dataplenno - Sistema Inteligente de Análise de Dados",
   description: "Plataforma inteligente para análise de dados empresariais com IA",
     generator: 'v0.dev'
 }
